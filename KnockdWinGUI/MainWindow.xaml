@@ -1,30 +1,39 @@
 ﻿<Window x:Class="KnockdWinGUI.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:dg="http://schemas.microsoft.com/wpf/2008/toolkit"
-        Title="MainWindow" Height="350" Width="525">
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        Title="Knockd Windows GUI" Height="305.224" Width="256.343">
+    <Window.Resources>
+        <x:Array x:Key="ProtocolsList" Type="sys:String">
+            <sys:String>tcp</sys:String>
+            <sys:String>udp</sys:String>
+        </x:Array>
+    </Window.Resources>
     <Grid>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="10,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="509*"/>
+            <ColumnDefinition Width="8*"/>
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="HostIPTextBox" HorizontalAlignment="Left" Height="23" Margin="10,39,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Label Content="Host IP" HorizontalAlignment="Left" Margin="10,13,0,0" VerticalAlignment="Top"/>
-        <dg:DataGrid  AutoGenerateColumns="False" HorizontalAlignment="Left" Margin="10,92,0,0" VerticalAlignment="Top" Height="145" Width="192" Name="PortsGrid" SelectionMode="Single" AlternatingRowBackground="#FFF7EDED" AlternationCount="1">
-            <dg:DataGridTextColumn Binding="{Binding Number}" Header="Port" Width="*"/>
-            <!--<DataGridTemplateColumn Header="Protocol" Width="100">
-                <DataGridTemplateColumn.CellTemplate>
-                    <DataTemplate>
-                        <TextBox Text="{Binding Protocol}"/>
-                    </DataTemplate>
-                </DataGridTemplateColumn.CellTemplate>
-                <DataGridTemplateColumn.CellEditingTemplate>
-                    <DataTemplate>
-                        <ComboBox Height="22" SelectedItem="{Binding Protocol}"/>
-                    </DataTemplate>
-                </DataGridTemplateColumn.CellEditingTemplate>
-            </DataGridTemplateColumn>-->
-        </dg:DataGrid>
+        <DataGrid AutoGenerateColumns="False" Margin="10,92,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="145" Width="192" Name="PortsGrid" SelectionMode="Single" AlternatingRowBackground="#FFF7EDED" AlternationCount="1">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Number}" Header="Port" Width="*"/>
+                <DataGridTemplateColumn Header="Protocol" Width="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <ComboBox Height="22" ItemsSource="{StaticResource ProtocolsList}" SelectedItem="{Binding Protocol}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
         <Label Content="Ports" HorizontalAlignment="Left" Margin="10,67,0,0" VerticalAlignment="Top"/>
-        <Button Content="+" HorizontalAlignment="Left" Margin="207,92,0,0" VerticalAlignment="Top" Width="33"/>
-        <Button Content="-" HorizontalAlignment="Left" Margin="207,119,0,0" VerticalAlignment="Top" Width="33"/>
-        <Button Content="Send" HorizontalAlignment="Left" Margin="10,242,0,0" VerticalAlignment="Top" Width="192"/>
-
+        <Button x:Name="AddPortButton" Content="+" HorizontalAlignment="Left" Margin="207,92,0,0" VerticalAlignment="Top" Width="33" Click="AddPortButton_Click"/>
+        <Button x:Name="RemovePortButton" Content="-" HorizontalAlignment="Left" Margin="207,119,0,0" VerticalAlignment="Top" Width="33" Click="RemovePortButton_Click"/>
+        <Button x:Name="SendPacketsButton" Content="Send" HorizontalAlignment="Left" Margin="10,242,0,0" VerticalAlignment="Top" Width="192" Click="SendPacketsButton_Click"/>
+        <Button x:Name="MoveUpPortButton" Content="↑" HorizontalAlignment="Left" Margin="207,146,0,0" VerticalAlignment="Top" Width="33" Click="MoveUpPortButton_Click"/>
+        <Button x:Name="MoveDownPortButton" Content="↓" HorizontalAlignment="Left" Margin="207,173,0,0" VerticalAlignment="Top" Width="33" Click="MoveDownPortButton_Click"/>
+        <!---->
     </Grid>
 </Window>
